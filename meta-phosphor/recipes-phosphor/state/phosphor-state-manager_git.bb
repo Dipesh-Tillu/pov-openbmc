@@ -85,7 +85,10 @@ DEPENDS += "libgpiod"
 RDEPENDS:${PN}-bmc += "bash"
 RDEPENDS:${PN}-host += "bash"
 
-EXTRA_OEMESON:append = " -Dtests=disabled"
+DEPENDS += "lcov"
+LDFLAGS += "-lgcov"
+CFLAGS += " -fprofile-arcs -ftest-coverage"
+EXTRA_OEMESON:append = " -Dtests=enabled -Db_coverage=true"
 
 FILES:${PN}-host = "${bindir}/phosphor-host-state-manager"
 FILES:${PN}-host += "${bindir}/phosphor-host-condition-gpio"

@@ -64,7 +64,11 @@ SYSTEMD_SERVICE:${PN}-psu-monitor = "${@bb.utils.contains('PACKAGECONFIG', 'moni
 SYSTEMD_SERVICE:${PN}-regulators = "${REGS_SVC} ${REGS_CONF_SVC} ${REGS_MON_ENA_SVC} ${REGS_MON_DIS_SVC}"
 SYSTEMD_SERVICE:${PN}-control = "${POWER_CONTROL_SVC}"
 
-EXTRA_OEMESON:append = " -Dtests=disabled"
+LDFLAGS += "-lgcov"
+DEPENDS += "lcov"
+CFLAGS += " -fprofile-arcs -ftest-coverage"
+
+EXTRA_OEMESON:append = " -Dtests=enabled -Db_coverage=true"
 
 # TODO: cold-redundancy is not installed in the repo yet
 # FILES:${PN}-cold-redundancy = "${bindir}/cold-redundancy"

@@ -24,8 +24,13 @@ inherit meson
 inherit pkgconfig
 inherit obmc-phosphor-systemd
 
+LDFLAGS += "-lgcov"
+DEPENDS += "lcov"
+CFLAGS += " -fprofile-arcs -ftest-coverage"
+
 EXTRA_OEMESON = " \
-        -Dtests=disabled \
+        -Dtests=enabled \
+        -Db_coverage=true \
         ${PSU_VERSION_UTIL} \
         ${PSU_VERSION_COMPARE_UTIL} \
         ${PSU_UPDATE_SERVICE} \
